@@ -66,23 +66,32 @@ export default class MainSection extends Component {
   }
 
   componentDidMount() {
-    // get URL state, display custom message
+    // Update current URL
+      // TODO: set current URL in chrome.storage.local in chrome/extension/background/urlListener.js?
+      // ... instead of re-querying on componentMount
     chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-      const url = tabs[0].url;
-      if (url.includes('amazon.com')) {
-        this.setState({
-          url: url,
-          popupMessage: "Hello! We've noticed that you're shopping for an item that a refugee family in greece needs.\
-            Care to donate?"
-        });
-      } else {
-        this.setState({
-          url: url,
-          popupMessage: "Hello! You will be notified here for potential donation matches."
+      this.setState({
+          url: tabs[0].url;,
         });
       }
-      
-    })
+    });
+
+    // Check if current tab is a match 
+      // Note: chrome.storage.local.isMatch is updated in chrome/extension/background/urlListener.js
+    chrome.storage.local.get('isMatch', obj => {
+      let match = obj.isMatch;
+      if (match) {
+        this.setState({
+            popupMessage: "Hello! We've noticed that you're shopping for an item that a refugee family in greece needs.\
+              Care to donate?"
+          });
+      } else {
+        this.setState({
+            popupMessage: "Hello! You will be notified here for potential donation matches."
+          });
+      }
+    });
+
   }
 
   render() {
