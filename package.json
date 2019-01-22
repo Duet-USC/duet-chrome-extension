@@ -16,7 +16,15 @@
     "type": "git",
     "url": "https://github.com/Duet-USC/duet-chrome-extension"
   },
-  "keywords": ["chrome", "extension", "react", "redux", "hot reload", "webpack", "boilerplate"],
+  "keywords": [
+    "chrome",
+    "extension",
+    "react",
+    "redux",
+    "hot reload",
+    "webpack",
+    "boilerplate"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {

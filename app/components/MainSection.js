@@ -66,24 +66,12 @@ export default class MainSection extends Component {
   }
 
   render() {
-    const { todos, actions } = this.props;
-    const { filter } = this.state;
-
-    const filteredTodos = todos.filter(TODO_FILTERS[filter]);
-    const completedCount = todos.reduce(
-      (count, todo) => (todo.completed ? count + 1 : count),
-      0
-    );
-
     return (
       <section className={style.main}>
-        {this.renderToggleAll(completedCount)}
-        <ul className={style.todoList}>
-          {filteredTodos.map(todo =>
-            <TodoItem key={todo.id} todo={todo} {...actions} />
-          )}
-        </ul>
-        {this.renderFooter(completedCount)}
+        <div>
+          Hello! We've noticed that you're shopping for an item that a refugee family in greece needs.
+          Care to donate?
+        </div>
       </section>
     );
   }
