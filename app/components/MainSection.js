@@ -65,12 +65,34 @@ export default class MainSection extends Component {
     }
   }
 
+  componentDidMount() {
+    // get URL state, display custom message
+    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+      const url = tabs[0].url;
+      if (url.includes('amazon.com')) {
+        this.setState({
+          url: url,
+          popupMessage: "Hello! We've noticed that you're shopping for an item that a refugee family in greece needs.\
+            Care to donate?"
+        });
+      } else {
+        this.setState({
+          url: url,
+          popupMessage: "Hello! You will be notified here for potential donation matches."
+        });
+      }
+      
+    })
+  }
+
   render() {
     return (
       <section className={style.main}>
         <div>
-          Hello! We've noticed that you're shopping for an item that a refugee family in greece needs.
-          Care to donate?
+          {this.state.popupMessage}
+        </div>
+        <div>
+          Current URL: {this.state.url}
         </div>
       </section>
     );
