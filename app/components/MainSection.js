@@ -66,23 +66,20 @@ export default class MainSection extends Component {
   }
 
   componentDidMount() {
-    // Update current URL
-      // TODO: set current URL in chrome.storage.local in chrome/extension/background/urlListener.js?
-      // ... instead of re-querying on componentMount
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-      this.setState({
-          url: tabs[0].url;,
-        });
-      }
-    });
+    // Read current URL and isMatch from chrome.local.storage,
+      // display custom popup message acordingly
+      // Note: chrome.storage.local.[url, isMatch] are updated in chrome/extension/background/urlListener.js
+    chrome.storage.local.get(['url', 'isMatch'], obj => {
+      let currentURL = obj.url;
 
-    // Check if current tab is a match 
-      // Note: chrome.storage.local.isMatch is updated in chrome/extension/background/urlListener.js
-    chrome.storage.local.get('isMatch', obj => {
+      // update URL
+      this.setState({url: currentURL});
+
+      // update popup message
       let match = obj.isMatch;
       if (match) {
         this.setState({
-            popupMessage: "Hello! We've noticed that you're shopping for an item that a refugee family in greece needs.\
+            popupMessage: "Hello! We've noticed that you're shopping for an item that a refugee family in Greece needs.\
               Care to donate?"
           });
       } else {
