@@ -41,3 +41,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 chrome.tabs.onActivated.addListener(function(activeInfo) {
 	checkCurrentTab();
 });
+
+// switch windows listener
+chrome.windows.onFocusChanged.addListener(function (windowId) {
+	checkCurrentTab();
+});
